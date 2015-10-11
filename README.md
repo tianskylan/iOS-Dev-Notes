@@ -18,16 +18,19 @@ A place to drop some iOS development related notes.
 	* Do not use any form of Hungarian notation (e.g. k for constants, m for methods), instead use short concise names and use Xcode's type Quick Help (⌥ + click) to discover a variable's type. Similarly do not use SNAKE\_CASE.
 * Converting Instances
 	* When creating code to convert instances from one type to another, use init() methods:
-```
-extension NSColor {
-	    convenience init(\_ mood: Mood) {
-	        super.init(color: NSColor.blueColor)
-	    }
-	} 
-	```
-* Singletons are simple in Swift:
-```	
-class ControversyManager {
-	    static let sharedInstance = ControversyManager()
+
+```swift
+extension NSColor {
+	convenience init(_ mood: Mood) {
+		super.init(color: NSColor.blueColor)
 	}
+}
+```
+	
+* Singletons are simple in Swift:
+
+```swift
+class ControversyManager {
+	static let sharedInstance = ControversyManager()
+}
 ```
