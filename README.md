@@ -1,2 +1,2 @@
 # iOS-Dev-Notes
-My journal to keep some interesting iOS development notes
+A place to drop some iOS development related notes.
