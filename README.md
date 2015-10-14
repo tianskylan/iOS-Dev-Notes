@@ -3,6 +3,9 @@ A place to drop some iOS development related notes.
 
 ## Swift Best Practice
 * Composition over inheritance
+	* *"The takeaway is that, if you’re considering making an inheritance hierarchy with lots of superclasses and subclasses, try using protocols instead."*
+
+
 * Variable names
 	* Do not use any form of Hungarian notation (e.g. k for constants, m for methods), instead use short concise names and use Xcode's type Quick Help (⌥ + click) to discover a variable's type. Similarly do not use SNAKE\_CASE.
 * Converting Instances
@@ -56,4 +59,6 @@ func resizeImage(url: NSURL) -> UIImage? {
     // ...
 }
 ```
+
+* Before hardcoding some value to 0, check to see if that type has some other initial value available. For example, `PHImageRequestID` has `PHInvalidImageRequestID`, so use that instead of 0.
 
