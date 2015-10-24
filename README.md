@@ -44,6 +44,26 @@ class ControversyManager {
 * ELSE IF the inferred type of the variable is the type
   * THEN the type’s implementation is called.
 
+### Lazy Initialization
+
+Simple way
+
+``` swift
+lazy var players = [String]()
+```
+
+With some logic
+
+``` swift
+lazy var players: [String] = {
+        var temporaryPlayers = [String]()
+        temporaryPlayers.append("John Doe")
+        return temporaryPlayers
+        }()
+```
+
+Or you can lazily initialize the `var` with a instance function or class function too.
+
 ## General tips
 
 * Use Enums, Structs and Protocols
