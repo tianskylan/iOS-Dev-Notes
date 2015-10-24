@@ -56,12 +56,11 @@ With some logic
 
 ``` swift
 lazy var players: [String] = {
-        var temporaryPlayers = [String]()
-        temporaryPlayers.append("John Doe")
-        return temporaryPlayers
-        }()
+	var temporaryPlayers = [String]()
+	temporaryPlayers.append("John Doe")
+	return temporaryPlayers
+}()
 ```
-
 Or you can lazily initialize the `var` with a instance function or class function too.
 
 ## General tips
@@ -88,11 +87,11 @@ func resizeImage(url: NSURL) -> UIImage? {
 
     // scale the image from sourceBuffer to destBuffer
     var error = vImageScale_ARGB8888(&sourceBuffer, &destBuffer, ...)
-    guard error == kvImageNoError 
+    guard error == kvImageNoError
         else { return nil }
 
     // create a CGImage from the destBuffer
-    guard let destCGImage = vImageCreateCGImageFromBuffer(&destBuffer, &format, ...) 
+    guard let destCGImage = vImageCreateCGImageFromBuffer(&destBuffer, &format, ...)
         else { return nil }
     // ...
 }
