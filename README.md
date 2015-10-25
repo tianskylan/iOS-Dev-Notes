@@ -63,7 +63,7 @@ Or you can lazily initialize the `var` with a instance function or class functio
 
 ## Additional tips
 * Use Enums, Structs and Protocols
-* `nil` coalescing
+* `nil` coalescing (`??` in swift)
 * Strong layout constraint
   * Weak Layout constraint outlets will be lost if set to be inactive. If want to change constraint.active, make sure it's a strong outlet
 * `@testable`
