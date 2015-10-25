@@ -61,7 +61,7 @@ lazy var players: [String] = {
 ```
 Or you can lazily initialize the `var` with a instance function or class function too.
 
-## General tips
+## Additional tips
 * Use Enums, Structs and Protocols
 * `nil` coalescing
 * Strong layout constraint
