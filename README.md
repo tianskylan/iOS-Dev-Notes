@@ -12,6 +12,9 @@ Model view view model (MVVM)
 
 [MVVM in Swift By Ash Furrow from Artsy](http://artsy.github.io/blog/2015/09/24/mvvm-in-swift/?utm_campaign=iOS+Dev+Weekly&utm_medium=rss&utm_source=iOS_Dev_Weekly_Issue_221) is the article that talks about this. Maybe good to revisit this.
 
+### Presentation Control
+Small classes that control the binding between the model and the views is the answer: Presentation Controls. The main difference between MVVM classes and Presentation Controls is that the latter does know about UIView classes. Presentation Controls are like mini View Controllers that are only responsible for the presentation.
+
 ## Swift Best Practice
 ### Variable names
 Do not use any form of Hungarian notation (e.g. k for constants, m for methods), instead use short concise names and use Xcode's type Quick Help (⌥ + click) to discover a variable's type. Similarly do not use SNAKE\_CASE.
