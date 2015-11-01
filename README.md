@@ -2,8 +2,6 @@
 
 A place to drop some iOS development related notes.
 
-[TOC]
-
 ## Architecture
 
 ### Composition over inheritance
@@ -15,6 +13,10 @@ A place to drop some iOS development related notes.
 Model view view model (MVVM)
 
 ![artsy MVVM image](http://artsy.github.io/images/2015-09-24-mvvm-in-swift/mvvm.png)
+
+* MVVM separates the *Presentation logic* from the ViewController
+* MVVM makes the presentation logic more testable
+* MVVM is made better with a binding system(KVO, or ReactiveCocoa)
 
 [MVVM in Swift By Ash Furrow from Artsy](http://artsy.github.io/blog/2015/09/24/mvvm-in-swift/?utm_campaign=iOS+Dev+Weekly&utm_medium=rss&utm_source=iOS_Dev_Weekly_Issue_221) is the article that talks about this. Maybe good to revisit this.
 
