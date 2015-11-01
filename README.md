@@ -120,7 +120,57 @@ Or you can lazily initialize the `var` with a instance function or class functio
     guard let destCGImage = vImageCreateCGImageFromBuffer(&destBuffer, &format, ...)
         else { return nil }
     // ...
-  }
-  ```
+<<<<<<< HEAD
+}
+```
+
+* Before hardcoding some value to 0, check to see if that type has some other initial value available. For example, `PHImageRequestID` has `PHInvalidImageRequestID`, so use that instead of 0.
+
+## Closure Syntax Cheetsheet
+How Do I Declare a Closure in Swift?
+
+```swift
+As a variable:
+var closureName: (parameterTypes) -> (returnType)
+
+As an optional variable:
+var closureName: ((parameterTypes) -> (returnType))?
+
+As a type alias:
+typealias closureType = (parameterTypes) -> (returnType)
+
+As a constant:
+let closureName: closureType = { ... }
+
+As an argument to a function call:
+func({(parameterTypes) -> (returnType) in statements})
+
+As a function parameter:
+array.sort({ (item1: Int, item2: Int) -> Bool in return item1 < item2 })
+
+As a function parameter with implied types:
+array.sort({ (item1, item2) -> Bool in return item1 < item2 })
+
+As a function parameter with implied return type:
+array.sort({ (item1, item2) in return item1 < item2 })
+
+As the last function parameter:
+array.sort { (item1, item2) in return item1 < item2 }
+
+As the last parameter, using shorthand argument names:
+array.sort { return $0 < $1 }
+
+As the last parameter, with an implied return value:
+array.sort { $0 < $1 }
+
+As the last parameter, as a reference to an existing function:
+array.sort(<)
+
+As a function parameter with explicit capture semantics:
+array.sort({ [unowned self] (item1: Int, item2: Int) -> Bool in return item1 < item2 })
+
+As a function parameter with explicit capture semantics and inferred parameters / return type:
+array.sort({ [unowned self] in return item1 < item2 })
+```
   
 * Before hardcoding some value to 0, check to see if that type has some other initial value available. For example, `PHImageRequestID` has `PHInvalidImageRequestID`, so use that instead of 0.
