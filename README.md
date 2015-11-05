@@ -6,14 +6,10 @@ A place to drop some iOS development related notes.
 *"The takeaway is that, if you’re considering making an inheritance hierarchy with lots of superclasses and subclasses, try using protocols instead."*
 
 ### MVVM
-**Model view view model (MVVM)**
-![artsy MVVM image](http://artsy.github.io/images/2015-09-24-mvvm-in-swift/mvvm.png)
 
 * MVVM separates the *Presentation logic* from the ViewController
 * MVVM makes the presentation logic more testable
 * MVVM is made better with a binding system(KVO, or ReactiveCocoa)
-
-[MVVM in Swift By Ash Furrow from Artsy](http://artsy.github.io/blog/2015/09/24/mvvm-in-swift/?utm_campaign=iOS+Dev+Weekly&utm_medium=rss&utm_source=iOS_Dev_Weekly_Issue_221) is the article that talks about this. Maybe good to revisit this.
 
 ### Presentation Control
 Small classes that control the binding between the model and the views is the answer: Presentation Controls. The main difference between MVVM classes and Presentation Controls is that the latter does know about UIView classes. Presentation Controls are like mini View Controllers that are only responsible for the presentation.
@@ -24,6 +20,7 @@ Do not use any form of Hungarian notation (e.g. k for constants, m for methods),
 
 ### Converting Instances
 When creating code to convert instances from one type to another, use init() methods:
+
 ``` swift
 extension NSColor {
 	convenience init(_ mood: Mood) {
@@ -34,6 +31,7 @@ extension NSColor {
 
 ### Singletons
 They are simple in Swift, but think about the design before using them:
+
 ``` swift
 class ControversyManager {
 	static let sharedInstance = ControversyManager()
@@ -51,10 +49,13 @@ class ControversyManager {
 
 ### Lazy Initialization
 Simple way
+
 ``` swift
 lazy var players = [String]()
 ```
+
 With some logic
+
 ``` swift
 lazy var players: [String] = {
 	var temporaryPlayers = [String]()
@@ -62,7 +63,96 @@ lazy var players: [String] = {
 	return temporaryPlayers
 }()
 ```
+
 Or you can lazily initialize the `var` with a instance function or class function too.
+
+## Closure Syntax Cheetsheet
+How Do I Declare a Closure in Swift?
+
+As a variable:
+
+```swift
+var closureName: (parameterTypes) -> (returnType)
+```
+
+As an optional variable:
+
+```swift
+var closureName: ((parameterTypes) -> (returnType))?
+```
+
+As a type alias:
+
+```swift
+typealias closureType = (parameterTypes) -> (returnType)
+```
+
+As a constant:
+
+```swift
+let closureName: closureType = { ... }
+```
+
+As an argument to a function call:
+
+```swift
+func({ parameterTypes) -> (returnType) in statements})
+```
+
+As a function parameter:
+
+```swift
+array.sort({ (item1: Int, item2: Int) -> Bool in return item1 < item2 })
+```
+
+As a function parameter with implied types:
+
+```swift
+array.sort({ (item1, item2) -> Bool in return item1 < item2 })
+```
+
+As a function parameter with implied return type:
+
+```swift
+array.sort({ (item1, item2) in return item1 < item2 })
+```
+
+As the last function parameter:
+
+```swift
+array.sort { (item1, item2) in return item1 < item2 }
+```
+
+As the last parameter, using shorthand argument names:
+
+```swift
+array.sort { return $0 < $1 }
+```
+
+As the last parameter, with an implied return value:
+
+```swift
+array.sort { $0 < $1 }
+```
+
+As the last parameter, as a reference to an existing function:
+
+```swift
+array.sort(<)
+```
+
+As a function parameter with explicit capture semantics:
+
+```swift
+array.sort({ [unowned self] (item1: Int, item2: Int) -> Bool in return item1 < item2 })
+```
+
+As a function parameter with explicit capture semantics and inferred parameters / return type:
+
+```swift
+array.sort({ [unowned self] in return item1 < item2 })
+```
+
 
 ## Additional tips
 * Use Enums, Structs and Protocols
@@ -73,6 +163,7 @@ Or you can lazily initialize the `var` with a instance function or class functio
   * In unit test cases, do `@testable import victorious` to expose files to the testing target
 * Use a `weak` reference whenever it is valid for that reference to become nil at some point during its lifetime. Conversely, use an unowned reference when you know that the reference will never be nil once it has been set during initialization.
 * A `defer` statement removes any chance of forgetting to clean up after ourselves while also simplifying our code. Even though the defer block comes immediately after the call to `alloc()`, its execution is delayed until the end of the current scope:
+
 ```swift
 func resizeImage(url: NSURL) -> UIImage? {
     // ...
@@ -94,77 +185,38 @@ func resizeImage(url: NSURL) -> UIImage? {
 ```
 
 * Before hardcoding some value to 0, check to see if that type has some other initial value available. For example, `PHImageRequestID` has `PHInvalidImageRequestID`, so use that instead of 0.
-
-## Closure Syntax Cheetsheet
-How Do I Declare a Closure in Swift?
-
-As a variable:
-```swift
-var closureName: (parameterTypes) -> (returnType)
-```
-
-As an optional variable:
+* Log Specific Constraints
 
 ```swift
-var closureName: ((parameterTypes) -> (returnType))?
+/// When debugging complex layouts, it can sometimes be helpful to look at 
+/// only the constraints involving a specific problem view or area. 
+/// We can use this function to grab an array of the constraints 
+/// affecting a particular axis.
+
+profileHeaderView.constraintsAffectingLayoutForAxis(.Vertical)
 ```
 
-As a type alias:
+* UIImageRenderingMode
+
 ```swift
-typealias closureType = (parameterTypes) -> (returnType)
+typedef NS_ENUM(NSInteger, UIImageRenderingMode) {
+    UIImageRenderingModeAutomatic,          // Use the default rendering mode for the context where the image is used
+    UIImageRenderingModeAlwaysOriginal,     // Always draw the original image, without treating it as a template
+    UIImageRenderingModeAlwaysTemplate,     // Always draw the image as a template image, ignoring its color information
+} NS_ENUM_AVAILABLE_IOS(7_0);
 ```
 
-As a constant:
+Then simply do,
+
 ```swift
-let closureName: closureType = { ... }
+if var imageToChange = imageView.image?.imageWithRenderingMode(.AlwaysTemplate) {
+    imageView.image = imageToChange
+    imageView.tintColor = .redColor() //Setting the tint color is what changes the color of the image itself!
+}
 ```
 
-As an argument to a function call:
-```swift
-func({ parameterTypes) -> (returnType) in statements})
-```
+The `UIImageRenderingMode` can be set in storyboard too.
 
-As a function parameter:
-```swift
-array.sort({ (item1: Int, item2: Int) -> Bool in return item1 < item2 })
-```
+* vector PDFs as assets can be used to generate icons at different sizes, @1x, @2x, @3x...
+* Assets in the asset catalog can be sliced so it knows how to strech itself. For example, it will be able to reserve its round corners when being streched.
 
-As a function parameter with implied types:
-```swift
-array.sort({ (item1, item2) -> Bool in return item1 < item2 })
-```
-
-As a function parameter with implied return type:
-```swift
-array.sort({ (item1, item2) in return item1 < item2 })
-```
-
-As the last function parameter:
-```swift
-array.sort { (item1, item2) in return item1 < item2 }
-```
-
-As the last parameter, using shorthand argument names:
-```swift
-array.sort { return $0 < $1 }
-```
-
-As the last parameter, with an implied return value:
-```swift
-array.sort { $0 < $1 }
-```
-
-As the last parameter, as a reference to an existing function:
-```swift
-array.sort(<)
-```
-
-As a function parameter with explicit capture semantics:
-```swift
-array.sort({ [unowned self] (item1: Int, item2: Int) -> Bool in return item1 < item2 })
-```
-
-As a function parameter with explicit capture semantics and inferred parameters / return type:
-```swift
-array.sort({ [unowned self] in return item1 < item2 })
-```
