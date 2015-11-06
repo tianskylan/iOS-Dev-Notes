@@ -188,9 +188,9 @@ func resizeImage(url: NSURL) -> UIImage? {
 * Log Specific Constraints
 
 ```swift
-/// When debugging complex layouts, it can sometimes be helpful to look at 
-/// only the constraints involving a specific problem view or area. 
-/// We can use this function to grab an array of the constraints 
+/// When debugging complex layouts, it can sometimes be helpful to look at
+/// only the constraints involving a specific problem view or area.
+/// We can use this function to grab an array of the constraints
 /// affecting a particular axis.
 
 profileHeaderView.constraintsAffectingLayoutForAxis(.Vertical)
@@ -239,7 +239,7 @@ The `UIImageRenderingMode` can be set in storyboard too.
 **Use stack view when appropriate**
 
 * You can stack the stack views too. Pretty neat
- 
+
 **Layout engine**
 
 * Activate and deactivate instead of Add and Remove constraints
@@ -265,7 +265,7 @@ The `UIImageRenderingMode` can be set in storyboard too.
 * But look out for competing priorities!
 * Results are more consistent
 * Use content priorities to get to the right layout
-	* Hugging priorities hug content 
+	* Hugging priorities hug content
 	* Compression resistance resists squishing
 
 **Alignment**
@@ -273,4 +273,3 @@ The `UIImageRenderingMode` can be set in storyboard too.
 * First and last baseline for better aligned text
 * Leading and trailing instead of left and right
 * Override alignmentRectInsets to adjust alignment rects
-
