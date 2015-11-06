@@ -220,3 +220,57 @@ The `UIImageRenderingMode` can be set in storyboard too.
 * vector PDFs as assets can be used to generate icons at different sizes, @1x, @2x, @3x...
 * Assets in the asset catalog can be sliced so it knows how to strech itself. For example, it will be able to reserve its round corners when being streched.
 
+## Tech talk notes
+### AVKit
+**AVAsset**
+
+* Load necessary properties and wait to be loaded before calling setter
+* Only load properties you need
+* Request properties needed in batches
+
+**AVPlayer & AVPlayerItem**
+
+* KVO for property changes
+* Do not rely on the ordering of events (Use KVO; set up item before associate to player)
+* Serialize access to objects on main queue
+& Set up player item before adding it to player
+
+### Mysteries of Autolayout
+**Use stack view when appropriate**
+
+* You can stack the stack views too. Pretty neat
+ 
+**Layout engine**
+
+* Activate and deactivate instead of Add and Remove constraints
+* Never deactivate everything in self.view.constraints
+* Keep a reference to the constraints you are going to change
+* You can animate the change of constraints (May need layoutIfNeeded call)
+
+**View Sizing**
+
+* Use constraints instead of hard-coded values
+* Override intrinsicContentSize for specific reasons
+	* size information does not come from constraints
+	* If view has custom drawing (sometimes)
+	* You will be responsible for invalidating
+
+**Self sizing Table view cells**
+
+* Define size fully in constraints
+
+**Priorities**
+
+* Can help keep constraints from unsatisfiability
+* But look out for competing priorities!
+* Results are more consistent
+* Use content priorities to get to the right layout
+	* Hugging priorities hug content 
+	* Compression resistance resists squishing
+
+**Alignment**
+
+* First and last baseline for better aligned text
+* Leading and trailing instead of left and right
+* Override alignmentRectInsets to adjust alignment rects
+
