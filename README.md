@@ -6,6 +6,7 @@ A place to drop some iOS development related notes.
 *"The takeaway is that, if you’re considering making an inheritance hierarchy with lots of superclasses and subclasses, try using protocols instead."*
 
 ### MVVM
+![artsy MVVM image](http://artsy.github.io/images/2015-09-24-mvvm-in-swift/mvvm.png)
 
 * MVVM separates the *Presentation logic* from the ViewController
 * MVVM makes the presentation logic more testable
