@@ -273,5 +273,3 @@ The `UIImageRenderingMode` can be set in storyboard too.
 * First and last baseline for better aligned text
 * Leading and trailing instead of left and right
 * Override alignmentRectInsets to adjust alignment rects
-
-Test line
