@@ -19,7 +19,7 @@ Small classes that control the binding between the model and the views is the an
 Do not use any form of Hungarian notation (e.g. k for constants, m for methods), instead use short concise names and use Xcode's type Quick Help (⌥ + click) to discover a variable's type. Similarly do not use SNAKE\_CASE.
 
 ### Converting Instances
-When creating code to convert instances from one type to another, use init() methods:
+When creating code to convert instances from one type to another, use init() methods:
 
 ``` swift
 extension NSColor {
@@ -273,3 +273,5 @@ The `UIImageRenderingMode` can be set in storyboard too.
 * First and last baseline for better aligned text
 * Leading and trailing instead of left and right
 * Override alignmentRectInsets to adjust alignment rects
+
+Test line
