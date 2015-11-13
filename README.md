@@ -239,12 +239,11 @@ The `UIImageRenderingMode` can be set in storyboard too.
 	* When in doubt, use a lock.
 	* **Yes, your code has a race condition** (even if you think it’s impossible).
 * Thread safety basic strategies
-	* @synchronized()
+	* `@synchronized()`
 	* Serial Dispatch Queue
-		* dispatch_sync
+		* `dispatch_sync`
 	* Concurrent Dispatch Queue
-		* dispatch_sync & dispatch_barrier synx
-		*
+		* `dispatch_sync` & `dispatch_barrier_sync`
 
 ## Tech talk notes
 ### AVKit
