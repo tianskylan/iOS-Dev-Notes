@@ -215,11 +215,36 @@ if var imageToChange = imageView.image?.imageWithRenderingMode(.AlwaysTemplate) 
     imageView.tintColor = .redColor() //Setting the tint color is what changes the color of the image itself!
 }
 ```
-
 The `UIImageRenderingMode` can be set in storyboard too.
 
 * vector PDFs as assets can be used to generate icons at different sizes, @1x, @2x, @3x...
 * Assets in the asset catalog can be sliced so it knows how to strech itself. For example, it will be able to reserve its round corners when being streched.
+* Notifications
+	* One-to-one
+		* Loose coupling
+			* Target action
+			* Delegate
+			* Callbacks
+		* Strong coupling
+			* Direct method invocation
+	* One-to-many
+		* Loose coupling
+			* Notifications
+		* Strong coupling
+			* KVO
+* Thread safety guidelines
+	* Don’t have mutable state whenever possible. Copies, copies, copies.
+	* Yes, your code has a race condition.
+	* Prefer thread-local storage over global state when it makes sense.
+	* When in doubt, use a lock.
+	* **Yes, your code has a race condition** (even if you think it’s impossible).
+* Thread safety basic strategies
+	* @synchronized()
+	* Serial Dispatch Queue
+		* dispatch_sync
+	* Concurrent Dispatch Queue
+		* dispatch_sync & dispatch_barrier synx
+		*
 
 ## Tech talk notes
 ### AVKit
