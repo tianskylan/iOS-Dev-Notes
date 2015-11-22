@@ -1,6 +1,8 @@
 # iOS-Dev-Notes
 A place to drop some iOS development related notes.
 
+[toc]
+
 ## Architecture
 ### Composition over inheritance
 *"The takeaway is that, if you’re considering making an inheritance hierarchy with lots of superclasses and subclasses, try using protocols instead."*
@@ -15,7 +17,7 @@ A place to drop some iOS development related notes.
 ### Presentation Control
 Small classes that control the binding between the model and the views is the answer: Presentation Controls. The main difference between MVVM classes and Presentation Controls is that the latter does know about UIView classes. Presentation Controls are like mini View Controllers that are only responsible for the presentation.
 
-## Swift Best Practice
+## Swift
 ### Variable names
 Do not use any form of Hungarian notation (e.g. k for constants, m for methods), instead use short concise names and use Xcode's type Quick Help (⌥ + click) to discover a variable's type. Similarly do not use SNAKE\_CASE.
 
@@ -42,9 +44,9 @@ class ControversyManager {
 ### Dynamic dispatch rules for protocol extensions (Polymorphism)
 * IF the inferred type of a variable is the protocol:
   * AND the method is defined in the original protocol
-    * THEN the runtime type’s implementation is called, irrespective of whether there is a default implementation in the extension.
+	  * THEN the runtime type’s implementation is called, irrespective of whether there is a default implementation in the extension.
   * AND the method is not defined in the original protocol,
-    * THEN the default implementation is called.
+	  * THEN the default implementation is called.
 * ELSE IF the inferred type of the variable is the type
   * THEN the type’s implementation is called.
 
@@ -66,6 +68,25 @@ lazy var players: [String] = {
 ```
 
 Or you can lazily initialize the `var` with a instance function or class function too.
+
+### Protocol Composition
+```swift
+// Too long and a bit confusing!
+func configure<T where T: TextPresentable, T: SwitchPresentable, T: ImagePresentable>(presenter: T) {
+```
+
+Can be turned into
+```swift
+typealias SwitchWithTextViewPresentable = protocol<TextPresentable, SwitchPresentable, ImagePresentable>
+
+...
+
+func configure(presenter: SwitchWithTextViewPresentable) {
+
+```
+
+###@autorelease
+Wraps the expression passed in as a closure, make it easier for the calling code. Instead of calling `f({2 > 1})`, it can call `f(2 > 1)` instead.
 
 ## Closure Syntax Cheetsheet
 How Do I Declare a Closure in Swift?
@@ -217,9 +238,9 @@ if var imageToChange = imageView.image?.imageWithRenderingMode(.AlwaysTemplate) 
 ```
 The `UIImageRenderingMode` can be set in storyboard too.
 
-* vector PDFs as assets can be used to generate icons at different sizes, @1x, @2x, @3x...
-* Assets in the asset catalog can be sliced so it knows how to strech itself. For example, it will be able to reserve its round corners when being streched.
-* Notifications
+ * vector PDFs as assets can be used to generate icons at different sizes, @1x, @2x, @3x...
+ * Assets in the asset catalog can be sliced so it knows how to strech itself. For example, it will be able to reserve its round corners when being streched.
+ * Notifications
 	* One-to-one
 		* Loose coupling
 			* Target action
@@ -232,18 +253,52 @@ The `UIImageRenderingMode` can be set in storyboard too.
 			* Notifications
 		* Strong coupling
 			* KVO
-* Thread safety guidelines
+ * Thread safety guidelines
 	* Don’t have mutable state whenever possible. Copies, copies, copies.
 	* Yes, your code has a race condition.
 	* Prefer thread-local storage over global state when it makes sense.
 	* When in doubt, use a lock.
 	* **Yes, your code has a race condition** (even if you think it’s impossible).
-* Thread safety basic strategies
+ * Thread safety basic strategies
 	* `@synchronized()`
 	* Serial Dispatch Queue
 		* `dispatch_sync`
 	* Concurrent Dispatch Queue
 		* `dispatch_sync` & `dispatch_barrier_sync`
+ * Some cool uses of `where` keyword
+	* In switch statements:
+	```swift
+	var value = (1,2)  
+	switch value {  
+	    case let (x, y) where x == 1:
+	        // match 1
+	    break
+	    case let (x, y) where x / 5 == 1:
+	        // not-match
+	    break
+	
+	    default:
+	    break
+	}
+	```
+	* in type constraints:
+	```swift
+	func genericFunction<S where S: StringLiteralConvertible>(string: S) {  
+	    print(string)
+	}
+	
+	genericFunction("lambada")  
+	```
+	
+----------
+* Map, filter and reduce used together
+```swift
+cities.filter { city in city.population > 1000 }
+	  .map { $0.cityByScalingPopulation() }
+	  .reduce("City: Population") { result, c in
+		   return result + "\n" + "\(c.name): \(c.population)"
+}
+```
 
 ## Tech talk notes
 ### AVKit
@@ -298,3 +353,9 @@ The `UIImageRenderingMode` can be set in storyboard too.
 * First and last baseline for better aligned text
 * Leading and trailing instead of left and right
 * Override alignmentRectInsets to adjust alignment rects
+
+### NSOperations
+* Pending, Ready, Executing, Finished
+	* At any point it can be cancelled
+* Generally it's a good idea to encapsulate modal UI logic into NSOperations
+* Use dependencies to clarify intent
